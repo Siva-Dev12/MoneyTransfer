@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transaction History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        .history-container {
+            max-width: 600px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="history-container">
+        <h2>Transaction History</h2>
+        <div id="transactionList">
+            Loading...
+        </div>
+    </div>
+    
+ <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch("/transactionHistory")
+        .then((response) => response.text())
+        .then((data) => {
+            document.getElementById("transactionList").innerHTML = data;
+        })
+        .catch((error) => {
+            document.getElementById("transactionList").innerText = "Error: " + error.message;
+        });
+    });
+</script>
+</body>
+</html>
+   
