@@ -3,9 +3,11 @@ package money;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -65,12 +67,13 @@ public class SendMoneyServlet extends HttpServlet{
 				add.executeUpdate();
 				
 				//add into the transaction table
+//				LocalDate currentdate=LocalDate.now();
                 PreparedStatement logTransactionStmt = c.prepareStatement(
-                        "insert into transactions_table (sender, receiver, amount) values (?, ?, ?)"
-                    );
-                    logTransactionStmt.setString(1, sender);
-                    logTransactionStmt.setString(2, receiver);
-                    logTransactionStmt.setDouble(3, amount);
+                        "insert into transactions_table (sender, receiver, amount) values (?, ?, ?)");
+                    logTransactionStmt.setString(1,sender);
+                    logTransactionStmt.setString(2,receiver);
+                    logTransactionStmt.setDouble(3,amount);
+//                    logTransactionStmt.setDate(4, currentdate);
                     logTransactionStmt.executeUpdate();
 
                     c.commit();

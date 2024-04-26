@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
 		try {
 			Class.forName(Classname);
 			Connection c=DriverManager.getConnection(Db_url);
-			PreparedStatement ps=c.prepareStatement("select * from user_table where usermail=? and userpassword=?");
+			PreparedStatement ps=c.prepareStatement("select * from user_table where useremail=? and userpassword=?");
 			
 			ps.setString(1,useremail);
 			ps.setString(2,password);
