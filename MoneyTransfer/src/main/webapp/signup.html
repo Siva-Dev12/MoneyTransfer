@@ -11,7 +11,7 @@
         }
         .form-container {
             max-width: 300px;
-            margin: auto;
+            margin: 60px auto;
             background-color: white;
             padding: 20px;
             border: 1px solid #ccc;
@@ -47,8 +47,16 @@
     <div class="form-container">
         <h2>Signup</h2>
         <form id="signupForm" action="signup" method="post">
-            <input type="email" name="useremail" placeholder="enter mail" required>
-            <input type="password" name="userpass" placeholder="enter Password" required>
+            <input type="text" name="username" placeholder="Enter Name" required>
+            <input type="tel" pattern="^[6-9]\d{9}$" name="usertel" placeholder="Enter Mobile Number" required>
+            <input type="email" pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" name="useremail" placeholder="Enter Email" required>
+            
+            <input type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+            title="The password must be 8 characters long. containing at least one uppercase letter,one lowercase letter,one digit and one special character"
+             name="userpass" placeholder="Enter Password" required>
+             
+            <input type="text" name="userbank" placeholder="Enter Bank Name" required="required">
+            <input type="text" pattern="^\d{4}\s\d{4}\s\d{4}$" name="useraccnumber" title="Account number should be in the format: 1234 5678 9012" placeholder="Enter Account Number" required>
             <button type="submit">Signup</button>
         </form>
     </div>
