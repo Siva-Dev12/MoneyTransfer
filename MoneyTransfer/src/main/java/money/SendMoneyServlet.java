@@ -66,14 +66,17 @@ public class SendMoneyServlet extends HttpServlet{
 				add.setString(3, receiver);
 				add.executeUpdate();
 				
-				//add into the transaction table
+//				add into the transaction table
 //				LocalDate currentdate=LocalDate.now();
+				
                 PreparedStatement logTransactionStmt = c.prepareStatement(
                         "insert into transactions_table (sender, receiver, amount) values (?, ?, ?)");
                     logTransactionStmt.setString(1,sender);
                     logTransactionStmt.setString(2,receiver);
                     logTransactionStmt.setDouble(3,amount);
-//                    logTransactionStmt.setDate(4, currentdate);
+                    
+//                  logTransactionStmt.setDate(4, currentdate);
+                    
                     logTransactionStmt.executeUpdate();
 
                     c.commit();
