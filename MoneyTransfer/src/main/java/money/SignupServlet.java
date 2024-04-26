@@ -30,7 +30,7 @@ public class SignupServlet extends HttpServlet{
 			Connection c=DriverManager.getConnection(Db_url);
 			
 			//check if the useremail already exists
-			PreparedStatement ps=c.prepareStatement("select count(*) from user_table where usermail=?");
+			PreparedStatement ps=c.prepareStatement("select count(*) from user_table where useremail=?");
 			ps.setString(1,useremail);
 			ResultSet rs= ps.executeQuery();
 			
@@ -41,7 +41,7 @@ public class SignupServlet extends HttpServlet{
 			}
 			
 			//insert the new user
-			PreparedStatement ps1=c.prepareStatement("insert into user_table (usermail,userpassword,balance) values(?,?,50000)");
+			PreparedStatement ps1=c.prepareStatement("insert into user_table (useremail,userpassword,balance) values(?,?,50000)");
 			ps1.setString(1, useremail);
 			ps1.setString(2, userpassword);
 			
