@@ -46,31 +46,12 @@
 <body>
     <div class="form-container">
         <h2>Send Money</h2>
-        <form id="sendMoneyForm">
+        <form id="sendMoneyForm" action="sendmoney" method="post">
             <input type="text" name="receiver" placeholder="Receiver Username" required>
             <input type="number" name="amount" step="0.01" placeholder="Amount" required>
             <button type="submit">Send Money</button>
         </form>
         <div id="responseMessage" class="response"></div>
     </div>
-
-    <script>
-        document.getElementById("sendMoneyForm").addEventListener("submit", function (e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-
-            fetch("/sendMoney", {
-                method: "POST",
-                body: formData,
-            })
-            .then((response) => response.text())
-            .then((data) => {
-                document.getElementById("responseMessage").innerText = data;
-            })
-            .catch((error) => {
-                document.getElementById("responseMessage").innerText = "Error: " + error.message;
-            });
-        });
-    </script>
 </body>
 </html>
