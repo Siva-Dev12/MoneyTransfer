@@ -41,7 +41,7 @@ public class SignupServlet extends HttpServlet{
 			}
 			
 			//insert the new user
-			PreparedStatement ps1=c.prepareStatement("insert into user_table (usermail,userpassword) values(?,?)");
+			PreparedStatement ps1=c.prepareStatement("insert into user_table (usermail,userpassword,balance) values(?,?,50000)");
 			ps1.setString(1, useremail);
 			ps1.setString(2, userpassword);
 			
