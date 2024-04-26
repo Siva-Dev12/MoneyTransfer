@@ -24,6 +24,10 @@ public class SignupServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String useremail=req.getParameter("useremail");
 		String userpassword=req.getParameter("userpass");
+		String username=req.getParameter("username");
+		long usermob=Long.parseLong(req.getParameter("usermob"));
+		String userbank=req.getParameter("userbank");
+		String useraccnumber=req.getParameter("useraccnumber");
 		
 		try {
 			Class.forName(Classname);
@@ -41,9 +45,13 @@ public class SignupServlet extends HttpServlet{
 			}
 			
 			//insert the new user
-			PreparedStatement ps1=c.prepareStatement("insert into user_table (useremail,userpassword,balance) values(?,?,50000)");
+			PreparedStatement ps1=c.prepareStatement("insert into user_table (useremail,userpassword,balance,username,userbank,usermob,useraccnumber) values(?,?,50000,?,?,?,?)");
 			ps1.setString(1, useremail);
 			ps1.setString(2, userpassword);
+			ps1.setString(3, username);
+			ps1.setString(4, userbank);
+			ps1.setLong(5, usermob);
+			ps1.setString(6, useraccnumber);
 			
 			ps1.executeUpdate();
 			resp.getWriter().println("Signup successfull");
