@@ -23,31 +23,27 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		String useraccnumber=req.getParameter("useraccnumber");
 		String useremail=req.getParameter("useremail");
 		String password=req.getParameter("userpassword");
 		
 		try {
 			Class.forName(Classname);
 			Connection c=DriverManager.getConnection(Db_url);
-			PreparedStatement ps=c.prepareStatement("select * from user_table where useremail=? and userpassword=?");
+			PreparedStatement ps=c.prepareStatement("select * from user_table where useremail=? and userpassword=? and useraccnumber=?");
 			
 			ps.setString(1,useremail);
 			ps.setString(2,password);
+			ps.setString(3,useraccnumber);
 			
 			ResultSet rs=ps.executeQuery();
-			
-			Cookie c1=new Cookie("email",useremail);
-			Cookie c2=new Cookie("pass",password);
-			
-			resp.addCookie(c1);
-			c1.setMaxAge(60*60*24);
-			resp.addCookie(c2);
 			
 			if(rs.next())
 			{
 				HttpSession session=req.getSession(true);
 				session.setAttribute("useremail",useremail);
 				session.setAttribute("userpassword",password);
+				session.setAttribute("useraccnumber",useraccnumber);
 				resp.sendRedirect("welcome.html");
 			}else {
 				resp.sendRedirect("login.html?error=invalid");
