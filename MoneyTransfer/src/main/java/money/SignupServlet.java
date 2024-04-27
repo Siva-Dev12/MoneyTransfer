@@ -34,16 +34,18 @@ public class SignupServlet extends HttpServlet{
 			Connection c=DriverManager.getConnection(Db_url);
 			
 			//check if the useremail already exists
-			PreparedStatement ps=c.prepareStatement("select count(*) from user_table where useremail=?");
-			ps.setString(1,useremail);
+			PreparedStatement ps=c.prepareStatement("select count(*) from user_table where useraccnumber=?");
+			ps.setString(1,useraccnumber);
 			ResultSet rs= ps.executeQuery();
 			
 			if(rs.next() && rs.getInt(1)>0)
 			{
-				resp.getWriter().println("useremil already exists");
+				resp.getWriter().println("useremil Account number is already exists");
 				return;
 			}
 			//check if the user account number is already exists
+			
+			
 			
 			//insert the new user
 			PreparedStatement ps1=c.prepareStatement("insert into user_table (username,useremail,userpassword,userbank,useraccnumber,usermob,balance) values(?,?,?,?,?,?,50000)");
