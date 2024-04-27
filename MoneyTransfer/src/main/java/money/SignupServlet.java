@@ -43,15 +43,16 @@ public class SignupServlet extends HttpServlet{
 				resp.getWriter().println("useremil already exists");
 				return;
 			}
+			//check if the user account number is already exists
 			
 			//insert the new user
-			PreparedStatement ps1=c.prepareStatement("insert into user_table (useremail,userpassword,balance,username,userbank,usermob,useraccnumber) values(?,?,50000,?,?,?,?)");
-			ps1.setString(1, useremail);
-			ps1.setString(2, userpassword);
-			ps1.setString(3, username);
+			PreparedStatement ps1=c.prepareStatement("insert into user_table (username,useremail,userpassword,userbank,useraccnumber,usermob,balance) values(?,?,?,?,?,?,50000)");
+			ps1.setString(1, username);
+			ps1.setString(2, useremail);
+			ps1.setString(3, userpassword);
 			ps1.setString(4, userbank);
-			ps1.setLong(5, usermob);
-			ps1.setString(6, useraccnumber);
+			ps1.setString(5, useraccnumber);
+			ps1.setLong(6, usermob);
 			
 			ps1.executeUpdate();
 			resp.getWriter().println("Signup successfull");
