@@ -56,7 +56,7 @@
              name="userpass" placeholder="Enter Password" required>
              
             <input type="text" name="userbank" placeholder="Enter Bank Name" required="required">
-            <input type="text" pattern="^\d{4}\s\d{4}\s\d{4}$" name="useraccnumber" title="Account number should be in the format: 1234 5678 9012" placeholder="Enter Account Number" required>
+            <input type="text" pattern="^\d{8,}$" name="useraccnumber" title="Enter Account number must be 8 characters above" placeholder="Enter Account Number" required>
             <button type="submit">Signup</button>
         </form>
     </div>
