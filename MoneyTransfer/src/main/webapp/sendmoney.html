@@ -11,7 +11,7 @@
         }
         .form-container {
             max-width: 300px;
-            margin: auto;
+            margin:60px auto;
             background-color: white;
             padding: 20px;
             border: 1px solid #ccc;
@@ -19,14 +19,14 @@
             text-align: center;
         }
         .form-container input {
-            width: 100%;
+            width: 90%;
             padding: 10px;
             border-radius: 5px;
             border: 1px solid #ccc;
             margin-bottom: 10px;
         }
         .form-container button {
-            width: 100%;
+            width: 40%;
             padding: 10px;
             background-color: #4CAF50;
             color: white;
@@ -47,8 +47,12 @@
     <div class="form-container">
         <h2>Send Money</h2>
         <form id="sendMoneyForm" action="sendmoney" method="post">
-            <input type="text" name="receiver" placeholder="Receiver Username" required>
-            <input type="number" name="amount" step="0.01" placeholder="Amount" required>
+            <input type="text" name="receivername" placeholder="Enter Receiver Name" required>
+            <input type="text" name="receivermob" pattern="^[6-9]\d{9}$" placeholder="Enter Mobile Number" required>
+            <input type="text" name="receiverbankname" placeholder="Enter Bank Name" required>
+            <input type="text" name="receiveraccnumber" pattern="^\d{8,}$" placeholder="Enter Account Number" required>
+            <input type="text" name="receiverifsc" placeholder="Enter IFSC Code" required>
+            <input type="text" name="amount" pattern="^[1-9]\d*(\.\d{1,2})?$" placeholder="Amount" required>
             <button type="submit">Send Money</button>
         </form>
         <div id="responseMessage" class="response"></div>
