@@ -47,8 +47,10 @@
     <div class="form-container">
         <h2>Login</h2>
         <form id="loginForm" action="login" method="post">
-            <input type="email" name="useremail" placeholder="Enter email" required>
-            <input type="password" name="userpassword" placeholder="Enter Password" required>
+            <input type="text" name="useraccnumber" pattern="^\d{8,}$" placeholder="Enter Account Number" required="required">
+            <input type="email" name="useremail" pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" placeholder="Enter email" required>
+            <input type="password" name="userpassword" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+            title="The password must be 8 characters long. containing at least one uppercase letter,one lowercase letter,one digit and one special character" placeholder="Enter Password" required>
             <button type="submit">Login</button>
         </form>
         <div id="errorMessage" class="error-message"></div>
