@@ -58,6 +58,7 @@ public class SignupServlet extends HttpServlet{
 			
 			ps1.executeUpdate();
 			resp.getWriter().println("Signup successfull");
+			resp.sendRedirect("login.html");
 		} catch (Exception e) {
 			resp.getWriter().println("Error :"+e.getMessage());
 		}
