@@ -23,6 +23,7 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		String username=req.getParameter("username");
 		String useraccnumber=req.getParameter("useraccnumber");
 		String useremail=req.getParameter("useremail");
 		String password=req.getParameter("userpassword");
@@ -30,17 +31,19 @@ public class LoginServlet extends HttpServlet {
 		try {
 			Class.forName(Classname);
 			Connection c=DriverManager.getConnection(Db_url);
-			PreparedStatement ps=c.prepareStatement("select * from user_table where useremail=? and userpassword=? and useraccnumber=?");
+			PreparedStatement ps=c.prepareStatement("select * from user_table where useremail=? and userpassword=? and useraccnumber=? and username=?");
 			
 			ps.setString(1,useremail);
 			ps.setString(2,password);
 			ps.setString(3,useraccnumber);
+			ps.setString(4, username);
 			
 			ResultSet rs=ps.executeQuery();
 			
 			if(rs.next())
 			{
 				HttpSession session=req.getSession(true);
+				session.setAttribute("username", username);
 				session.setAttribute("useremail",useremail);
 				session.setAttribute("userpassword",password);
 				session.setAttribute("useraccnumber",useraccnumber);
