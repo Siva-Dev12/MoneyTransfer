@@ -13,8 +13,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebServlet("/receiver")
+@WebServlet("/receiverdetails")
 public class ReceiverDetailsServlet extends HttpServlet{
 
 	private static final String Classname="com.mysql.cj.jdbc.Driver";
@@ -22,6 +23,7 @@ public class ReceiverDetailsServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
 		String receivername=req.getParameter("receivername");
 		long receivermob=Long.parseLong( req.getParameter("receivermob"));
 		String receiverbankname=req.getParameter("receiverbankname");
@@ -39,12 +41,9 @@ public class ReceiverDetailsServlet extends HttpServlet{
 			
 			if(rs.next() && rs.getInt(1)>0)
 			{
-				resp.getWriter().println("useremil Account is already exists");
+				resp.getWriter().println("user Account is already exists");
 				return;
-			}
-			//check if the user account number is already exists
-			
-			
+			}		
 			
 			//insert the new user
 			PreparedStatement ps1=c.prepareStatement("insert into receiver_table (receivername,receivermob,receiverbankname,receiveraccnumber,receiverifsc) values(?,?,?,?,?)");
@@ -55,8 +54,15 @@ public class ReceiverDetailsServlet extends HttpServlet{
 			ps1.setString(5, receiverifsc);
 			
 			ps1.executeUpdate();
+			
+			HttpSession session=req.getSession(true);
+			session.setAttribute("receivername",receivername);
+			session.setAttribute("receiverbankname",receiverbankname);
+			session.setAttribute("receiveraccnumber",receiveraccnumber);
+			session.setAttribute("receiverifsc",receiverifsc);
+			
 			resp.getWriter().println("receiver details saved successfully..");
-//			resp.sendRedirect("login.html");
+			resp.sendRedirect("sendmoney.html");
 		} catch (Exception e) {
 			resp.getWriter().println("Error :"+e.getMessage());
 		}
