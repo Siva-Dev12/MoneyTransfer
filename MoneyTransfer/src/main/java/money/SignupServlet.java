@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/signup")
 public class SignupServlet extends HttpServlet{
@@ -40,7 +41,7 @@ public class SignupServlet extends HttpServlet{
 			
 			if(rs.next() && rs.getInt(1)>0)
 			{
-				resp.getWriter().println("useremil Account is already exists");
+				resp.getWriter().println("user Account is already exists");
 				return;
 			}
 			//check if the user account number is already exists
@@ -57,7 +58,14 @@ public class SignupServlet extends HttpServlet{
 			ps1.setLong(6, usermob);
 			
 			ps1.executeUpdate();
+			
+			HttpSession session=req.getSession(true);
+			session.setAttribute("username", username);
+			session.setAttribute("userbank",userbank);
+			session.setAttribute("usermob",usermob);
+			
 			resp.getWriter().println("Signup successfull");
+			
 			resp.sendRedirect("login.html");
 		} catch (Exception e) {
 			resp.getWriter().println("Error :"+e.getMessage());
