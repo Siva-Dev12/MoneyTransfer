@@ -40,7 +40,7 @@ public class SignupServlet extends HttpServlet{
 			
 			if(rs.next() && rs.getInt(1)>0)
 			{
-				resp.getWriter().println("useremil Account number is already exists");
+				resp.getWriter().println("useremil Account is already exists");
 				return;
 			}
 			//check if the user account number is already exists

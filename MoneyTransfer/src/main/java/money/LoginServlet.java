@@ -31,19 +31,19 @@ public class LoginServlet extends HttpServlet {
 		try {
 			Class.forName(Classname);
 			Connection c=DriverManager.getConnection(Db_url);
-			PreparedStatement ps=c.prepareStatement("select * from user_table where useremail=? and userpassword=? and useraccnumber=? and username=?");
+			PreparedStatement ps=c.prepareStatement("select * from user_table where useremail=? and userpassword=? and useraccnumber=?");
 			
 			ps.setString(1,useremail);
 			ps.setString(2,password);
 			ps.setString(3,useraccnumber);
-			ps.setString(4, username);
+//			ps.setString(4, username);
 			
 			ResultSet rs=ps.executeQuery();
 			
 			if(rs.next())
 			{
 				HttpSession session=req.getSession(true);
-				session.setAttribute("username", username);
+//				session.setAttribute("username", username);
 				session.setAttribute("useremail",useremail);
 				session.setAttribute("userpassword",password);
 				session.setAttribute("useraccnumber",useraccnumber);
