@@ -24,14 +24,20 @@ public class SendMoneyServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session=req.getSession(false);
-		if(session==null || session.getAttribute("useremail")==null )
+				
+		if(session==null || session.getAttribute("receiveraccnumber")==null )
 		{
-			resp.sendRedirect("login.html");
+			resp.sendRedirect("sendmoney.html");
 			return;
 		}
 		
-		String sender=(String) session.getAttribute("useremail");
-		String receiver=req.getParameter("receiver");
+		String sender=(String) session.getAttribute("username");
+		String useraccnumber=(String) session.getAttribute("useraccnumber");
+		String receivername=(String)session.getAttribute("receivername");
+		long receivermob=Long.parseLong(req.getParameter("receivermob"));
+		String receiverbankname=(String)session.getAttribute("receiverbankname");
+		long receiveraccnumber =Long.parseLong(req.getParameter("receiveraccnumber"));
+		String receiverifsc=(String)session.getAttribute("receiverifsc");
 		double amount=Double.parseDouble(req.getParameter("amount"));
 		
 		PrintWriter out=resp.getWriter();
@@ -42,38 +48,43 @@ public class SendMoneyServlet extends HttpServlet{
 			c.setAutoCommit(false);
 			
 			//check if sender has enough money
-			PreparedStatement checkbalance=c.prepareStatement("select balance from user_table where useremail=?");
-			checkbalance.setString(1,sender);
+			PreparedStatement checkbalance=c.prepareStatement("select balance from user_table where useraccnumber=?");
+			checkbalance.setString(1,useraccnumber);
 			ResultSet rs=checkbalance.executeQuery();
 			if(rs.next() && rs.getDouble("balance") >=amount)
 			{
 				double senderbalance=rs.getDouble("balance");
 				
 				//deduct from sender table
-				PreparedStatement deduct=c.prepareStatement("update user_table set balance=? where useremail=?");
+				PreparedStatement deduct=c.prepareStatement("update user_table set balance=? where useraccnumber=?");
 				deduct.setDouble(1, senderbalance-amount);
-				deduct.setString(2,sender);
+				deduct.setString(2,useraccnumber);
 				deduct.executeUpdate();
 				
 				//add to receiver table
-				PreparedStatement set=c.prepareStatement("insert into receiver_table (receivername,balance) values (?,0)");
-				set.setString(1, receiver);
-				set.executeUpdate();
-				
-				PreparedStatement add=c.prepareStatement("update receiver_table set receivername=? ,balance=balance +? where receivername=?");
-				add.setString(1, receiver);
-				add.setDouble(2,amount);
-				add.setString(3, receiver);
-				add.executeUpdate();
+//				PreparedStatement set=c.prepareStatement("insert into receiver_table (receivername,balance) values (?,0)");
+//				set.setString(1, receiver);
+//				set.executeUpdate();
+//				
+//				PreparedStatement add=c.prepareStatement("update receiver_table set receivername=? ,balance=balance +? where receivername=?");
+//				add.setString(1, receiver);
+//				add.setDouble(2,amount);
+//				add.setString(3, receiver);
+//				add.executeUpdate();
 				
 //				add into the transaction table
 //				LocalDate currentdate=LocalDate.now();
 				
                 PreparedStatement logTransactionStmt = c.prepareStatement(
-                        "insert into transactions_table (sender, receiver, amount) values (?, ?, ?)");
+                        "insert into transactions_table () values (?,?,?,?,?,?,?,?)");
                     logTransactionStmt.setString(1,sender);
-                    logTransactionStmt.setString(2,receiver);
-                    logTransactionStmt.setDouble(3,amount);
+                    logTransactionStmt.setString(2,useraccnumber);
+                    logTransactionStmt.setString(3,receivername);
+                    logTransactionStmt.setLong(4,receivermob);
+                    logTransactionStmt.setString(5,receiverbankname);
+                    logTransactionStmt.setLong(6,receiveraccnumber);
+                    logTransactionStmt.setString(7,receiverifsc);
+                    logTransactionStmt.setDouble(8,amount);
                     
 //                  logTransactionStmt.setDate(4, currentdate);
                     
