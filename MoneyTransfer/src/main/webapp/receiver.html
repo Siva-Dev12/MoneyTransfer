@@ -41,20 +41,33 @@
             color: blue;
             text-align: center;
         }
+      .form-container a {
+            text-decoration: none;
+            color:  white;
+            background-color: #45a049;
+            padding: 8px 8px;
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <div class="form-container">
         <h2>Receiver Details</h2>
-        <form id="sendMoneyForm" action="receiver" method="post">
+        <form id="reciverForm" action="receiverdetails" method="post">
             <input type="text" name="receivername" placeholder="Enter Receiver Name" required>
             <input type="text" name="receivermob" pattern="^[6-9]\d{9}$" placeholder="Enter Mobile Number" required>
             <input type="text" name="receiverbankname" placeholder="Enter Bank Name" required>
             <input type="text" name="receiveraccnumber" pattern="^\d{8,}$" placeholder="Enter Account Number" required>
             <input type="text" name="receiverifsc" placeholder="Enter IFSC Code" required>
             <!-- <input type="text" name="amount" pattern="^[1-9]\d*(\.\d{1,2})?$" placeholder="Amount" required>  -->
-            <button type="submit">Send Money</button>
+            <button type="submit">Send Money</button> <a href="sendmoney.html">Already Have</a>
         </form>
+
         <div id="responseMessage" class="response"></div>
     </div>
 </body>
