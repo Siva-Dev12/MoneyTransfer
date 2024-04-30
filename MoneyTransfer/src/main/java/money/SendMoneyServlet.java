@@ -61,20 +61,6 @@ public class SendMoneyServlet extends HttpServlet{
 				deduct.setString(2,useraccnumber);
 				deduct.executeUpdate();
 				
-				//add to receiver table
-//				PreparedStatement set=c.prepareStatement("insert into receiver_table (receivername,balance) values (?,0)");
-//				set.setString(1, receiver);
-//				set.executeUpdate();
-//				
-//				PreparedStatement add=c.prepareStatement("update receiver_table set receivername=? ,balance=balance +? where receivername=?");
-//				add.setString(1, receiver);
-//				add.setDouble(2,amount);
-//				add.setString(3, receiver);
-//				add.executeUpdate();
-				
-//				add into the transaction table
-//				LocalDate currentdate=LocalDate.now();
-				
                 PreparedStatement logTransactionStmt = c.prepareStatement(
                         "insert into transactions_table () values (?,?,?,?,?,?,?,?)");
                     logTransactionStmt.setString(1,sender);
